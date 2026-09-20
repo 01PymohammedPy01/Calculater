@@ -17,8 +17,8 @@ namespace Calculater
         public decimal Number2 = 0;
         enOperations Operator;
 
-        private bool _DigitState = false;           // True = next digit overwrites screen
-        private bool _hasPendingOperation = false;  // True = an operator was previously selected
+        private bool _DigitState = false;           
+        private bool _hasPendingOperation = false;  
 
         void DigitClick(object sender, EventArgs e)
         {
@@ -42,7 +42,6 @@ namespace Calculater
             Button TheOperator = (Button)sender;
             enOperations selectedOp = (enOperations)Convert.ToInt32(TheOperator.Tag);
 
-            // Case 1: Changing mind on operator (e.g., pressed + then immediately -)
             if (_DigitState && _hasPendingOperation)
             {
                 Operator = selectedOp;
@@ -50,7 +49,7 @@ namespace Calculater
                 return;
             }
 
-            // Case 2: Continuous chaining (e.g., 5 + 3 + 2)
+
             if (_hasPendingOperation)
             {
                 Number2 = decimal.Parse(txtbxResult.Text);
@@ -59,7 +58,7 @@ namespace Calculater
             }
             else
             {
-                // First operator click in a new calculation
+            
                 Number1 = decimal.Parse(txtbxResult.Text);
             }
 
@@ -69,7 +68,7 @@ namespace Calculater
             lblResult.Text = Number1.ToString() + " " + TheOperator.Text;
         }
 
-        private void btnResult_Click(object sender, EventArgs e) // Equals (=) Button
+        private void btnResult_Click(object sender, EventArgs e) 
         {
             if (string.IsNullOrWhiteSpace(txtbxResult.Text) || !_hasPendingOperation) return;
 
@@ -84,7 +83,7 @@ namespace Calculater
             _DigitState = true;
         }
 
-        // Shared calculation helper (DRY principle)
+      
         private decimal ExecuteMath(decimal num1, decimal num2, enOperations op)
         {
             switch (op)
